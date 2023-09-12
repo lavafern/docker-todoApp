@@ -1,0 +1,49 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2a2612;
+}
+
+h1 {
+    color: #333;
+}
+
+.button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Center vertically within the viewport */
+    
+}
+
+.card {
+  background-color: #F8FF95;
+  max-width: 18rem; /* Adjust the maximum width as needed */
+}
+
+.list-group-item{
+    background-color: #F8FF95; /* Change this to your desired background color */
+}
+
+.btn-sm {
+    padding: 5px 1px;
+    font-size: 10px;
+    border-radius: 60px;
+    width:30%;    
+}
+
+.listbutton {
+    float: right;
+    margin-right: 20%;
+}
+
+
+

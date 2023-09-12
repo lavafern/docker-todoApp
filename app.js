@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const {db} = require('./model/dbconnection')
+const {dbService} = require('./model/dbconnection')
 
 const app = express()
 app.set("view engine","ejs")
@@ -14,35 +14,18 @@ app.use(express.static(__dirname + '/views'));
 app.use(bodyParser.urlencoded({extended : true}))
 
 app.get('/',(req,res) => {
-    const sqlQuery = 'SELECT * FROM tasks'
 
-    db.query(sqlQuery, (err,result) => {
-        if (err) {
-            console.log(err);
-        }else {
-            const taskObject = Object.values(JSON.parse(JSON.stringify(result)))
-            console.log(taskObject);
-            res.render('../views/index.ejs',{ mytaskObject : taskObject })
-        }
-    })
-
-    
+    const urlPath = '../views/index.ejs'
+    dbService.fetchItemFromDb()
+    .then(taskObject => res.render(urlPath,{ mytaskObject : taskObject }) )
 
 })
 
-app.get('/api/test',(req,res) => {
-
-    // const sqlQuery = 'SELECT * FROM tasks'
-
-    // db.query(sqlQuery,(err,result) => {
-        // if (err) {
-            // console.log(err);
-        // }else {
-            // res.send(result)
-        // }
-    // })
-    
-    res.render('../views/index.ejs')
+app.post('/createuser',(req,res) => {
+    // const urlPath = '../views/index.ejs'
+    const datanya = req.body.ftaks
+    dbService.createItemToDb(datanya)
+    .then(() =>  res.redirect('/'))
 })
 
 

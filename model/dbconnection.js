@@ -8,40 +8,59 @@ const db = mysql.createPool({
     port: '3306'
 })
 
-exports.db = db
+
 
 class QueryActions {
 
-    async fetchItemFromDb() {
+    fetchItemFromDb() {
         try{
-            const response = await new Promise((resolve,reject) => {
+            return new Promise((resolve,reject) => {
                 const sqlQuery = 'SELECT * FROM tasks'
-                
-                db.query(sqlQuery,(err,res) => {
+                console.log('before sqlQuery');
+
+                db.query(sqlQuery,(err,result) => {
+                    console.log('after Querying');
                     if (err) {
+                        console.log('rejected')
                         reject(new Error('fetchItemFromDb db.query failed'))
                     }else {
-                        const taskObject = Object.values(JSON.parse(JSON.stringify(result)))
+                        console.log('good')
+                        resolve(Object.values(JSON.parse(JSON.stringify(result))))
                     }
                 })
 
             })
-
-            console.log(response);
 
         }catch(er) {
             console.log(er);
     }
     }
 
-    // async createItemToDb()  {
+    createItemToDb(task_name)  {
 
-        // const response = 
-    // }
+        try{
+            return new Promise((resolve,reject) => {
+                const taksStatus = 0
+                const sqlQuery = 'INSERT INTO tasks(task_name,taks_status) values (?,?)'
+                const value = [task_name,taksStatus]
+
+                db.query(sqlQuery,value,(err,result) => {
+                    if (err) {
+                        reject(new Error('query failed!'))
+                    } else {
+                        resolve(result)
+                    }
+                })
+            })
+            }catch (er) {
+                console.log(er);
+            }
+    }
 
 
 }
 
 const dbService = new QueryActions()
 
+exports.db = db
 exports.dbService = dbService

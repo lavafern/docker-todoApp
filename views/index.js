@@ -19,21 +19,17 @@ async function loadUserData(data,statusReader,statusConverted) {
             const lineThrough =  checked ? 'text-decoration: line-through' : ''
 
             tabledata += `
-            
-
             <div id="myforms" class="d-flex justify-content-between"> 
 
-
-                
                 <div class="mr-auto p-2" id='checkb' > 
                     
-                <form action="/updataskstatus" class ="editf" method="post" id="${iterator.task_id}st">
-                    <div class="form-check">
-                        <input type="hidden" name="taskid"  value="${iterator.task_id}">
-                        <input type="hidden" name="taskstatus" value="${newStatus}">
-                        <input class="form-check-input" type="checkbox" name="taskstatus  id="flexCheckDefault"  onclick='clickStatusBox(${iterator.task_id})' ${checked}>
-                    </div>
-                </form> 
+                    <form action="/updataskstatus" class ="editf" method="post" id="${iterator.task_id}st">
+                        <div class="form-check">
+                            <input type="hidden" name="taskid"  value="${iterator.task_id}">
+                            <input type="hidden" name="taskstatus" value="${newStatus}">
+                            <input class="form-check-input" type="checkbox" name="taskstatus  id="flexCheckDefault"  onclick='clickStatusBox(${iterator.task_id})' ${checked}>
+                        </div>
+                    </form> 
                     
                     <h2 style="${lineThrough}">${iterator.task_name} </h2> 
 
@@ -45,8 +41,6 @@ async function loadUserData(data,statusReader,statusConverted) {
                         <input type="hidden" name="taskname" id="${iterator.task_id}edinname" value="">    
                         <button  type="button" class="btn btn-warning btn-sm" id='btndel'  onclick='clickEdit(${iterator.task_id})'> <i class="fa fa-pencil" aria-hidden="true"></i> </button>  
                     </form> 
-                
-                
                 
                     <form action="/deletetask" class ="deletef" method="post" id="${iterator.task_id}del">  
                         <input type="hidden" name="taskid"  value="${iterator.task_id}"> 
@@ -73,7 +67,6 @@ function getObject() {
 
 }
 
-
 function clickDelete(value) {
     // valuetype = number
     const confirmation = window.confirm('apakah anda yakin ingin menghapus data ?')
@@ -82,7 +75,6 @@ function clickDelete(value) {
         forms.submit()
     }
   }
-
 
 function clickEdit(value) {
   // valuetype = number
@@ -136,9 +128,6 @@ clickStatusBox = (value) => {
     form.submit()
     
 }
-
-
-
 
 timeUpdate()
 loadUserData(getObject(),getStatus,getNewStatus)

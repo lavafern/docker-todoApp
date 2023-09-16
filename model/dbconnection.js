@@ -16,15 +16,11 @@ class QueryActions {
         try{
             return new Promise((resolve,reject) => {
                 const sqlQuery = 'SELECT * FROM tasks'
-                console.log('before sqlQuery');
 
                 db.query(sqlQuery,(err,result) => {
-                    console.log('after Querying');
                     if (err) {
-                        console.log('rejected')
                         reject(new Error('fetchItemFromDb db.query failed'))
                     }else {
-                        console.log('good')
                         resolve(Object.values(JSON.parse(JSON.stringify(result))))
                     }
                 })
@@ -40,9 +36,9 @@ class QueryActions {
 
         try{
             return new Promise((resolve,reject) => {
-                const taksStatus = 0
-                const sqlQuery = 'INSERT INTO tasks(task_name,taks_status) values (?,?)'
-                const value = [task_name,taksStatus]
+                const taskStatus = 0
+                const sqlQuery = 'INSERT INTO tasks(task_name,task_status) values (?,?)'
+                const value = [task_name,taskStatus]
 
                 db.query(sqlQuery,value,(err,result) => {
                     if (err) {
@@ -57,10 +53,67 @@ class QueryActions {
             }
     }
 
+    deleteItem(task_id) {
+
+        try{
+        return new Promise((resolve, reject) => {
+            const sqlQuery = 'DELETE FROM tasks WHERE task_id = ?'
+            db.query(sqlQuery,task_id,(err,result) => {
+                if (err) {
+                    reject(new Error('Query failed!'))
+                }else {
+                    resolve(result)
+                }
+            })
+        })} catch (er) {
+            console.log(er);
+        }
+    }
+
+    updateItem(task_name,task_id) {
+        try {
+            return new Promise((resolve, reject) => {
+
+                const sqlQuery = 'UPDATE tasks set task_name=? where task_id=?'
+                const value=[task_name,task_id]
+
+                db.query(sqlQuery,value,(err,result) => {
+                    if (err) {
+                        reject(new Error('query failed'))
+                    }else {
+                        resolve(result)
+                    }
+                })
+            })
+        }catch (er) {
+            console.log(er);
+        }
+
+    }
+
+    updateTaskStatus(task_status,task_id) {
+
+        try {
+            return new Promise((resolve, reject) => {
+                const sqlQuery = 'UPDATE tasks set task_status=? where task_id=?'
+                const value=[task_status,task_id]
+                db.query(sqlQuery,value,(err,result) => {
+                    if (err) {
+                        reject(new Error('query failed'))
+                    }else {
+                        resolve(result)
+                    }
+                })
+            })
+        }catch (er) {
+            console.log(er);
+        }
+
+    }
+
 
 }
 
 const dbService = new QueryActions()
 
-exports.db = db
 exports.dbService = dbService

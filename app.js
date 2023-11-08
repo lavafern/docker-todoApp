@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -5,7 +6,7 @@ const {dbService} = require('./model/dbconnection')
 
 const app = express()
 app.set("view engine","ejs")
-const port = 3001
+const port = 3002
 
 app.use(cors())
 app.use(express.json())
@@ -13,7 +14,14 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/views'));
 app.use(bodyParser.urlencoded({extended : true}))
 
+app.get("/tes", (req,res) => {
+    res.json({
+        data : "hello world"
+    })
+})
+
 //read
+
 app.get('/', async (req,res) => {
     const urlPath = '../views/index.ejs'
     const taskObject = await dbService.fetchItemFromDb()

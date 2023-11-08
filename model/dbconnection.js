@@ -1,11 +1,12 @@
-const mysql = require('mysql')
+const mysql = require("mysql2")
+const {DB_HOST,DB_PORT,DB_USER,DB_PASSWORD,DB_NAME,DB_CONNECTION_LIMIT,SERVER_PORT} = process.env
 
 const db = mysql.createPool({
-    host : 'localhost',
-    user : 'root',
-    paswword :"",
-    database : 'todo_node',
-    port: '3306'
+    host : DB_HOST,
+    user : DB_USER,
+    password :DB_PASSWORD,
+    database : DB_NAME,
+    port: DB_PORT
 })
 
 
@@ -19,7 +20,8 @@ class QueryActions {
 
                 db.query(sqlQuery,(err,result) => {
                     if (err) {
-                        reject(new Error('fetchItemFromDb db.query failed'))
+                        console.log();
+                        reject(new Error(err.message))
                     }else {
                         resolve(Object.values(JSON.parse(JSON.stringify(result))))
                     }
@@ -42,7 +44,7 @@ class QueryActions {
 
                 db.query(sqlQuery,value,(err,result) => {
                     if (err) {
-                        reject(new Error('query failed!'))
+                        reject(new Error(err.message))
                     } else {
                         resolve(result)
                     }
@@ -60,7 +62,7 @@ class QueryActions {
             const sqlQuery = 'DELETE FROM tasks WHERE task_id = ?'
             db.query(sqlQuery,task_id,(err,result) => {
                 if (err) {
-                    reject(new Error('Query failed!'))
+                    reject(new Error(err.message))
                 }else {
                     resolve(result)
                 }
@@ -79,7 +81,7 @@ class QueryActions {
 
                 db.query(sqlQuery,value,(err,result) => {
                     if (err) {
-                        reject(new Error('query failed'))
+                        reject(new Error(err.message))
                     }else {
                         resolve(result)
                     }
@@ -99,7 +101,7 @@ class QueryActions {
                 const value=[task_status,task_id]
                 db.query(sqlQuery,value,(err,result) => {
                     if (err) {
-                        reject(new Error('query failed'))
+                        reject(new Error(err.message))
                     }else {
                         resolve(result)
                     }

@@ -1,0 +1,28 @@
+version: "3"
+services:
+  mysqldb-todo:
+    image: mysql:latest
+    restart: unless-stopped
+    container_name: todoMysql
+    env_file:
+     - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQLDB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - 3306:3306
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/0_init.sql
+  app:
+    image: my-todo
+    env_file:
+      - .env
+    depends_on:
+    - mysqldb-todo
+    ports:
+      - 5000:3002
+  
+  

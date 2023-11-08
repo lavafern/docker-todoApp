@@ -6,8 +6,8 @@ async function loadUserData(data,statusReader,statusConverted) {
     const table = document.querySelector('#list1')
 
     if (data.length < 1) {
-        table.innerHTML = `<div class="d-flex justify-content-center" id='nodata'>
-                                    <h2> Kamu belum punya kegiatan  &#128561; </h2>
+        table.innerHTML = `<div class="d-flex justify-content-center" id='nodata' >
+                                    <h2 style="font-weight: bold"> Kamu belum punya kegiatan  &#128561; </h2>
                             </div>`
     } else {
         let tabledata = ``
@@ -52,6 +52,12 @@ async function loadUserData(data,statusReader,statusConverted) {
 
         table.innerHTML = tabledata 
     }
+}
+function showFeedback() {
+    const feedbackDiv = document.querySelector('#feedback')
+    const number = Math.floor((Math.random() * 10) + 1);
+    feedbackDiv.innerHTML = `<img src="images/${number}.png" width="100">`
+
 }
 
 function getObject() {
@@ -130,7 +136,13 @@ clickStatusBox = (value) => {
 }
 
 timeUpdate()
+
+
+showFeedback()
+
 loadUserData(getObject(),getStatus,getNewStatus)
+
+
 
 
 
